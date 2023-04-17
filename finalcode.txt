@@ -1,0 +1,111 @@
+from tkinter import *
+from PIL import Image, ImageTk, ImageOps, ImageEnhance, ImageFilter
+
+# Functions for image filters
+def grayscale_image():
+    global img
+    img = Image.open('C:/Users/DELL/Documents/projectimage.jpg')
+    img = img.resize((500, 500))
+    img = ImageOps.grayscale(img)
+    img = ImageTk.PhotoImage(img)
+    canvas.itemconfig(image_on_canvas, image=img)
+
+def solarize_image():
+    global img
+    img = Image.open('C:/Users/DELL/Documents/projectimage.jpg')
+    img = img.resize((500, 500))
+    img = ImageOps.solarize(img, threshold=128)
+    img = ImageTk.PhotoImage(img)
+    canvas.itemconfig(image_on_canvas, image=img)
+
+def brightness_up():
+    global img
+    img = Image.open('C:/Users/DELL/Documents/projectimage.jpg')
+    img = img.resize((500, 500))
+    enhancer = ImageEnhance.Brightness(img)
+    img = enhancer.enhance(1.5)
+    img = ImageTk.PhotoImage(img)
+    canvas.itemconfig(image_on_canvas, image=img)
+
+def brightness_down():
+    global img
+    img = Image.open('C:/Users/DELL/Documents/projectimage.jpg')
+    img = img.resize((500, 500))
+    enhancer = ImageEnhance.Brightness(img)
+    img = enhancer.enhance(0.5)
+    img = ImageTk.PhotoImage(img)
+    canvas.itemconfig(image_on_canvas, image=img)
+
+def blur_image():
+    global img
+    img = Image.open('C:/Users/DELL/Documents/projectimage.jpg')
+    img = img.resize((500, 500))
+    img = img.filter(ImageFilter.GaussianBlur(radius=10))
+    img = ImageTk.PhotoImage(img)
+    canvas.itemconfig(image_on_canvas, image=img)
+
+
+
+def crop_image():
+    global img
+    img = Image.open('C:/Users/DELL/Documents/projectimage.jpg')
+    img = img.resize((500, 500))
+    cropped = img.crop((100, 100, 400, 400)) # crop the image
+    img = ImageTk.PhotoImage(cropped)
+    canvas.itemconfig(image_on_canvas, image=img)
+
+# Function to rotate the image
+def rotate_image():
+    global img
+    img = Image.open('C:/Users/DELL/Documents/projectimage.jpg')
+    img = img.resize((500, 500))
+    rotated = img.rotate(45) # rotate the image by 45 degrees
+    img = ImageTk.PhotoImage(rotated)
+    canvas.itemconfig(image_on_canvas, image=img)
+
+
+def reset_image():
+    global img
+    img = Image.open('C:/Users/DELL/Documents/projectimage.jpg')
+    img = img.resize((500, 500))
+    img = ImageTk.PhotoImage(img)
+    canvas.itemconfig(image_on_canvas, image=img)
+
+# Creating the main window and canvas
+window = Tk()
+window.title("Image Filters")
+canvas = Canvas(window, width=500, height=500)
+canvas.pack(expand =TRUE, fill = BOTH)
+
+# Loading the image onto the canvas
+img = Image.open('C:/Users/DELL/Documents/projectimage.jpg')
+img = img.resize((500, 500))
+img = ImageTk.PhotoImage(img)
+image_on_canvas = canvas.create_image(0, 0, anchor=NW, image=img)
+
+# Creating buttons for image filters
+grayscale_button = Button(window, text="Grayscale", command=grayscale_image)
+grayscale_button.pack(side=LEFT)
+
+solarize_button = Button(window, text="Solarize", command=solarize_image)
+solarize_button.pack(side=LEFT)
+
+brightness_up_button = Button(window, text="Increase Brightness", command=brightness_up)
+brightness_up_button.pack(side=LEFT)
+
+brightness_down_button = Button(window, text="Decrease Brightness", command=brightness_down)
+brightness_down_button.pack(side=LEFT)
+
+blur_button = Button(window, text="Blur", command=blur_image)
+blur_button.pack(side=LEFT)
+# Creating buttons for image crop and rotation
+crop_button = Button(window, text="Crop", command=crop_image)
+crop_button.pack(side=LEFT)
+
+rotate_button = Button(window, text="Rotate", command=rotate_image)
+rotate_button.pack(side=LEFT)
+
+reset_button = Button(window, text="Reset", command=reset_image)
+reset_button.pack(side=LEFT)
+
+window.mainloop()
